@@ -443,6 +443,7 @@ const data = {
     },
   ],
   shift: false,
+  capslock: false,
   language: "en",
   sound: false,
   helper: false,
@@ -547,26 +548,6 @@ const toggleButtonOff = () => {
 
 buttonOff.addEventListener("click", toggleButtonOff);
 
-// text redactor
-
-const keys = document.querySelectorAll(".keybord__key");
-
-const makeText = (keys) => {
-  textarea.value = textarea.value + keys.childNodes[0].innerHTML;
-};
-
-const deleteText = () => {
-  textarea.value = textarea.value.substring(0, textarea.value.length - 1);
-};
-
-const capitalizeText = (keys) => {
-  textarea.value = textarea.value + keys.childNodes[0].innerHTML.toUpperCase();
-};
-
-const lowerText = (keys) => {
-  textarea.value = textarea.value + keys.childNodes[0].innerHTML.toLowerCase();
-};
-
 // change language
 
 const changeLanguageRus = (keys) => {
@@ -605,7 +586,7 @@ const speechRecognaizer = (lang) => {
       textarea.value = "";
       textarea.value = textarea.value + result[0].transcript;
     } else {
-      console.log("Промежуточный результат: ", result[0].transcript);
+      console.log("");
     }
   };
 
@@ -633,9 +614,64 @@ const removeSpeech = (key) => {
   recognizer.abort();
 };
 
+// text redactor
+
+const keys = document.querySelectorAll(".keybord__key");
+
+const deleteText = () => {
+  textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+};
+
+const capitalizeText = (key) => {
+  textarea.value = textarea.value + key.childNodes[0].innerHTML.toUpperCase();
+};
+
+const lowerText = (key) => {
+  textarea.value = textarea.value + key.childNodes[0].innerHTML.toLowerCase();
+};
+
+const makeText = (key) => {
+  console.log(2);
+  if (data.capslock === false && data.shift === false) {
+    textarea.value = textarea.value + key.childNodes[0].innerHTML;
+  } else if (data.capslock === true && data.shift === false) {
+    capitalizeText(key);
+  } else if (data.capslock === true && data.shift === true) {
+    lowerText(key);
+  } else if (data.capslock === false && data.shift === true) {
+    capitalizeText(key);
+  }
+};
+
+const makeTab = () => {
+  textarea.value = textarea.value + " ";
+};
+
+const makeCapsLock = (key) => {
+  if (key.classList.contains("keybord__capslock--active")) {
+    key.classList.remove("keybord__capslock--active");
+    data.capslock = false;
+  } else {
+    key.classList.add("keybord__capslock--active");
+    data.capslock = true;
+  }
+};
+
+const makeShift = (key) => {
+  if (key.classList.contains("keybord__shift--active")) {
+    key.classList.remove("keybord__shift--active");
+    data.shift = false;
+  } else {
+    key.classList.add("keybord__shift--active");
+    data.shift = true;
+  }
+};
+
 // general function
 
 const editText = (keys, key) => {
+  console.log(key.childNodes[0].innerHTML);
+  console.log(key.childNodes[0].innerHTML.includes("СapsLock"));
   if (key.childNodes[0].innerHTML.includes("Язык")) {
     changeLanguageEn(keys);
   } else if (key.childNodes[0].innerHTML.includes("Lang")) {
@@ -651,9 +687,23 @@ const editText = (keys, key) => {
     } else {
       createSpeech(key);
     }
+  } else if (key.childNodes[0].innerHTML.includes("Tab")) {
+    makeTab();
+  } else if (key.childNodes[0].innerHTML.includes("СapsLock")) {
+    makeCapsLock(key);
+  } else if (key.childNodes[0].innerHTML.includes("Shift")) {
+    makeShift(key);
+  } else if (
+    key.childNodes[0].innerHTML.includes("Sound") ||
+    key.childNodes[0].innerHTML.includes("Звук")
+  ) {
+    makeCapsLock(key);
   } else {
+    console.log(1);
     makeText(key);
   }
 };
 
 keys.forEach((k) => k.addEventListener("click", () => editText(keys, k)));
+
+keys.forEach((k) => k.addEventListener("keydown", () => editText(keys, k)));
