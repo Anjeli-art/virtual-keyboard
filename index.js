@@ -455,8 +455,6 @@ if (localStorage.getItem("laguage")) {
   data.language = localStorage.getItem("laguage");
 }
 
-console.log(data.language);
-
 const body = document.querySelector("body");
 
 const wrapper = document.createElement("div");
@@ -469,6 +467,7 @@ wrapper.append(content);
 
 const textarea = document.createElement("textarea");
 textarea.className = "window";
+textarea.autofocus;
 textarea.cols = "120";
 textarea.rows = "8";
 content.append(textarea);
@@ -643,7 +642,6 @@ const lowerText = (key) => {
 };
 
 const makeText = (key) => {
-  console.log(2);
   if (data.capslock === false && data.shift === false) {
     textarea.value = textarea.value + key.childNodes[0].innerHTML;
   } else if (data.capslock === true && data.shift === false) {
@@ -731,16 +729,16 @@ const makeSound = (key) => {
 
 // audio
 
-const audio = document.createElement("audio");
-audio.src = "https://wav-library.net/zvuk-klaviatury-iphone-nabor-teksta-mp3";
-wrapper.append(audio);
+const audio = new Audio();
+audio.src = "assets/Sound_22465.mp3";
 
 // general function
 
 const editText = (keys, key) => {
-  audio.play();
-  console.log(key.childNodes[0].innerHTML);
-  console.log(key.childNodes[0].innerHTML.includes("СapsLock"));
+  if (data.sound) {
+    audio.play();
+  }
+
   if (key.childNodes[0].innerHTML.includes("Язык")) {
     changeLanguageEn(keys);
   } else if (key.childNodes[0].innerHTML.includes("Lang")) {
@@ -762,13 +760,20 @@ const editText = (keys, key) => {
     makeCapsLock(key);
   } else if (key.childNodes[0].innerHTML.includes("Shift")) {
     makeShift(key, keys);
+  } else if (key.childNodes[0].innerHTML.includes("Alt")) {
+    console.log(1);
+  } else if (key.childNodes[0].innerHTML.includes("Cntrl")) {
+    console.log(1);
+  } else if (key.childNodes[0].innerHTML.includes("Enter")) {
+    console.log(1);
+  } else if (key.childNodes[0].innerHTML.includes("Del")) {
+    console.log(1);
   } else if (
     key.childNodes[0].innerHTML.includes("Sound") ||
     key.childNodes[0].innerHTML.includes("Звук")
   ) {
     makeSound(key);
   } else {
-    console.log(1);
     makeText(key);
   }
 };
@@ -778,9 +783,6 @@ keys.forEach((k) => k.addEventListener("click", () => editText(keys, k)));
 // general function for physical keybord
 
 const createPhysicalKey = (key) => {
-  const aaa = keys.filter((k) => {
-    console.log(k);
-  });
   console.log(key);
 };
 
