@@ -537,6 +537,10 @@ data.keybordData.map((key) => {
   }
 });
 
+// new data
+
+const newData = [];
+
 // toggle keyboard
 
 const toggleButtonOff = () => {
@@ -556,7 +560,11 @@ const changeLanguageRus = (keys) => {
 
   keys.forEach((key, i) => {
     key.childNodes[0].innerHTML = "";
-    key.childNodes[0].innerHTML = data.keybordData[i].valueRu;
+    if (data.shift) {
+      key.childNodes[0].innerHTML = data.keybordData[i].shiftRu;
+    } else {
+      key.childNodes[0].innerHTML = data.keybordData[i].valueRu;
+    }
   });
 };
 
@@ -566,7 +574,11 @@ const changeLanguageEn = (keys) => {
 
   keys.forEach((key, i) => {
     key.childNodes[0].innerHTML = "";
-    key.childNodes[0].innerHTML = data.keybordData[i].valueEn;
+    if (data.shift) {
+      key.childNodes[0].innerHTML = data.keybordData[i].shiftEn;
+    } else {
+      key.childNodes[0].innerHTML = data.keybordData[i].valueEn;
+    }
   });
 };
 
@@ -657,19 +669,76 @@ const makeCapsLock = (key) => {
   }
 };
 
-const makeShift = (key) => {
+const changeShiftRus = (keys) => {
+  keys.forEach((key, i) => {
+    key.childNodes[0].innerHTML = "";
+    key.childNodes[0].innerHTML = data.keybordData[i].shiftRu;
+  });
+};
+
+const changeShiftEn = (keys) => {
+  keys.forEach((key, i) => {
+    key.childNodes[0].innerHTML = "";
+    key.childNodes[0].innerHTML = data.keybordData[i].shiftEn;
+  });
+};
+
+const removeShiftRus = (keys) => {
+  keys.forEach((key, i) => {
+    key.childNodes[0].innerHTML = "";
+    key.childNodes[0].innerHTML = data.keybordData[i].valueRu;
+  });
+};
+
+const removeShiftEn = (keys) => {
+  keys.forEach((key, i) => {
+    key.childNodes[0].innerHTML = "";
+    key.childNodes[0].innerHTML = data.keybordData[i].valueEn;
+  });
+};
+
+const makeShift = (key, keys) => {
   if (key.classList.contains("keybord__shift--active")) {
+    if (data.language === "en") {
+      removeShiftEn(keys);
+    } else if (data.language === "ru") {
+      removeShiftRus(keys);
+    }
+
     key.classList.remove("keybord__shift--active");
     data.shift = false;
   } else {
+    if (data.language === "en") {
+      changeShiftEn(keys);
+    } else if (data.language === "ru") {
+      changeShiftRus(keys);
+    }
+
     key.classList.add("keybord__shift--active");
     data.shift = true;
   }
 };
 
+const makeSound = (key) => {
+  if (key.classList.contains("keybord__sound--active")) {
+    key.classList.remove("keybord__sound--active");
+    data.sound = false;
+  } else {
+    key.classList.add("keybord__sound--active");
+    data.sound = true;
+  }
+};
+
+// audio
+
+const audio = document.createElement("audio");
+audio.src = "https://wav-library.net/zvuk-klaviatury-iphone-nabor-teksta-mp3";
+wrapper.append(audio);
+
 // general function
 
 const editText = (keys, key) => {
+  audio.play();
   console.log(key.childNodes[0].innerHTML);
   console.log(key.childNodes[0].innerHTML.includes("СapsLock"));
   if (key.childNodes[0].innerHTML.includes("Язык")) {
@@ -692,12 +761,12 @@ const editText = (keys, key) => {
   } else if (key.childNodes[0].innerHTML.includes("СapsLock")) {
     makeCapsLock(key);
   } else if (key.childNodes[0].innerHTML.includes("Shift")) {
-    makeShift(key);
+    makeShift(key, keys);
   } else if (
     key.childNodes[0].innerHTML.includes("Sound") ||
     key.childNodes[0].innerHTML.includes("Звук")
   ) {
-    makeCapsLock(key);
+    makeSound(key);
   } else {
     console.log(1);
     makeText(key);
@@ -706,4 +775,13 @@ const editText = (keys, key) => {
 
 keys.forEach((k) => k.addEventListener("click", () => editText(keys, k)));
 
-keys.forEach((k) => k.addEventListener("keydown", () => editText(keys, k)));
+// general function for physical keybord
+
+const createPhysicalKey = (key) => {
+  const aaa = keys.filter((k) => {
+    console.log(k);
+  });
+  console.log(key);
+};
+
+document.addEventListener("keydown", (e) => createPhysicalKey(e.key));
