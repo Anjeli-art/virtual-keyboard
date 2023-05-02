@@ -761,13 +761,21 @@ const editText = (keys, key) => {
   } else if (key.childNodes[0].innerHTML.includes("Shift")) {
     makeShift(key, keys);
   } else if (key.childNodes[0].innerHTML.includes("Alt")) {
-    console.log(1);
+    console.log("");
   } else if (key.childNodes[0].innerHTML.includes("Cntrl")) {
-    console.log(1);
+    console.log("");
   } else if (key.childNodes[0].innerHTML.includes("Enter")) {
-    console.log(1);
+    console.log("");
   } else if (key.childNodes[0].innerHTML.includes("Del")) {
-    console.log(1);
+    console.log("");
+  } else if (key.childNodes[0].innerHTML.includes("⇐")) {
+    console.log("");
+  } else if (key.childNodes[0].innerHTML.includes("⇑")) {
+    console.log("");
+  } else if (key.childNodes[0].innerHTML.includes("⇒")) {
+    console.log("");
+  } else if (key.childNodes[0].innerHTML.includes("⇓")) {
+    console.log("");
   } else if (
     key.childNodes[0].innerHTML.includes("Sound") ||
     key.childNodes[0].innerHTML.includes("Звук")
@@ -783,7 +791,7 @@ keys.forEach((k) => k.addEventListener("click", () => editText(keys, k)));
 // general function for physical keybord
 
 const createPhysicalKey = (key) => {
-  console.log(key);
+  console.log("");
 };
 
 document.addEventListener("keydown", (e) => createPhysicalKey(e.key));
