@@ -467,7 +467,8 @@ wrapper.append(content);
 
 const textarea = document.createElement("textarea");
 textarea.className = "window";
-textarea.autofocus;
+textarea.autofocus = true;
+textarea.tabIndex = 1;
 textarea.cols = "120";
 textarea.rows = "8";
 content.append(textarea);
@@ -717,6 +718,13 @@ const makeShift = (key, keys) => {
   }
 };
 
+const makeEnter = () => {
+  textarea.value =
+    textarea.value.substring(0, textarea.selectionStart) +
+    "\n" +
+    textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+};
+
 const makeSound = (key) => {
   if (key.classList.contains("keybord__sound--active")) {
     key.classList.remove("keybord__sound--active");
@@ -761,21 +769,21 @@ const editText = (keys, key) => {
   } else if (key.childNodes[0].innerHTML.includes("Shift")) {
     makeShift(key, keys);
   } else if (key.childNodes[0].innerHTML.includes("Alt")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("Cntrl")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("Enter")) {
-    console.log("");
+    makeEnter();
   } else if (key.childNodes[0].innerHTML.includes("Del")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("⇐")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("⇑")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("⇒")) {
-    console.log("");
+    return;
   } else if (key.childNodes[0].innerHTML.includes("⇓")) {
-    console.log("");
+    return;
   } else if (
     key.childNodes[0].innerHTML.includes("Sound") ||
     key.childNodes[0].innerHTML.includes("Звук")
