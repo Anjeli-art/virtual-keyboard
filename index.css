@@ -1,0 +1,174 @@
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 160%;
+  color: #4c4c4c;
+
+  background-color: #fd7400;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+a {
+  text-decoration: none;
+}
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class] {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+.wrapper {
+  height: 100vh;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 3% 0;
+  max-width: 870px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.window {
+  border: 5px #004258 solid;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  color: #004258;
+  margin-bottom: 5px;
+}
+
+.wrapper__keybord {
+  border: 5px #004258 solid;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.keybord {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  opacity: 1;
+  transition: all 0.5s;
+}
+
+.keybord--off {
+  opacity: 0;
+}
+
+.keybord__key {
+  min-width: 50px;
+  max-height: 50px;
+  text-align: center;
+  background-color: #004258;
+  background-size: cover;
+  color: #bfdb39;
+
+  font-weight: bold;
+  font-size: 24px;
+  transition: all 0.5s;
+  padding: 2px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  cursor: pointer;
+}
+
+.keybord__key:hover {
+  color: #fee119;
+  box-shadow: none;
+}
+
+.keybord__key--one {
+  line-height: 50px;
+}
+
+.keybord__btn {
+  position: absolute;
+  left: -32px;
+  width: 42px;
+  height: 40px;
+  border: none;
+  border: 4px #004258 solid;
+  border-radius: 10px;
+  background: #fee119;
+  transition: all 0.5s;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.keybord__btn:hover {
+  background: #004258;
+}
+
+.keybord__helper--active {
+  background-color: #1f8a70;
+  color: #fee119;
+}
+
+.keybord__capslock--active {
+  background-color: #1f8a70;
+  color: #fee119;
+}
+
+.keybord__shift--active {
+  background-color: #1f8a70;
+  color: #fee119;
+}
+
+.keybord__sound--active {
+  background-color: #1f8a70;
+  color: #fee119;
+}
